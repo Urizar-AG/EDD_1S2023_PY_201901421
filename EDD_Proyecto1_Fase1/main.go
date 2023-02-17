@@ -1,9 +1,12 @@
 package main
 
 import (
+	"EDD_Proyecto1_Fase1/Estructuras"
 	"fmt"
 	"strconv"
 )
+
+var colaPendientes = Estructuras.NewCola()
 
 func main() {
 
@@ -77,10 +80,13 @@ func menuAdministrador() {
 				lastName string
 				password string
 			)
-			fmt.Println("> Ingresa los datos")
+			fmt.Println("> Ingresa los datos del estudiante:")
+			fmt.Println("> Carnet Nombre Apellido Contraseña")
 			_, err := fmt.Scanln(&carnet, &name, &lastName, &password)
 			if err != nil {
 				fmt.Println(err)
+			} else {
+				colaPendientes.Enqueue(carnet, name, lastName, password)
 			}
 		case 4:
 		case 5:
