@@ -2,8 +2,12 @@ package main
 
 import (
 	"EDD_Proyecto1_Fase1/Estructuras"
+	"encoding/csv"
 	"fmt"
+	"io"
+	"os"
 	"strconv"
+	"strings"
 )
 
 var colaPendientes = Estructuras.NewCola()
@@ -89,6 +93,7 @@ func menuAdministrador() {
 				colaPendientes.Enqueue(carnet, name, lastName, password)
 			}
 		case 4:
+			cargaMasiva()
 		case 5:
 			fmt.Println("Cerrando Sesión...")
 			option = 5
@@ -97,4 +102,45 @@ func menuAdministrador() {
 			fmt.Println()
 		}
 	}
+}
+
+func cargaMasiva() {
+
+	var route string
+
+	fmt.Println("> Ingresa la ruta del archivo: ")
+	fmt.Scanln(&route)
+	file, errOpen := os.Open(route)
+	if errOpen != nil {
+		fmt.Println("> No fue posible cargar el archivo, error:", errOpen)
+	} else {
+		csvReader := csv.NewReader(file)
+		csvReader.Read() //Lee la primera línea para saltar encabezados
+
+		//Lee línea por línea
+		for {
+			student, err := csvReader.Read()
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				fmt.Println("> Ocurrio un error al leer el archivo:", errOpen)
+			} else {
+				var name, lastName string
+
+				carnet, _ := strconv.Atoi(student[0])
+				fullName := strings.Split(student[1], " ")
+				if len(fullName) > 1 {
+					name = fullName[0]
+					lastName = fullName[1]
+				} else {
+					name = fullName[0]
+					lastName = fullName[0]
+				}
+				password := student[2]
+				colaPendientes.Enqueue(carnet, name, lastName, password)
+			}
+		}
+	}
+	defer file.Close()
 }
