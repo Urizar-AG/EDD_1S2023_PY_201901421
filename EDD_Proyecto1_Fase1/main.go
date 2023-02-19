@@ -11,6 +11,7 @@ import (
 )
 
 var colaPendientes = Estructuras.NewCola()
+var listaEstudiantes = Estructuras.NewDoublyLinkedList()
 
 func main() {
 
@@ -76,7 +77,17 @@ func menuAdministrador() {
 
 		switch option {
 		case 1:
+			if !(colaPendientes.IsEmpty()) {
+				verEstudiantesPendientes()
+			} else {
+				fmt.Println("> No hay estudiantes pendientes en la cola")
+			}
 		case 2:
+			if !(listaEstudiantes.IsEmpty()) {
+				listaEstudiantes.PrintStudents()
+			} else {
+				fmt.Println("> No existen estudiantes registrados en el sistema")
+			}
 		case 3:
 			var (
 				carnet   int
@@ -100,6 +111,63 @@ func menuAdministrador() {
 		default:
 			fmt.Println("Ingresa una opción valida")
 			fmt.Println()
+		}
+	}
+}
+
+func verEstudiantesPendientes() {
+
+	var option int = 0
+
+	for option != 3 {
+
+		aux := colaPendientes.Peek() // Obtiene el primer elemento de la cola
+
+		fmt.Println("########################################")
+		fmt.Println("         Estudiantes Pendientes         ")
+		fmt.Printf("             Pendientes: %d             \n", colaPendientes.Length)
+		fmt.Println("########################################")
+		fmt.Printf("Estudiante Actual: %d, %s %s \n", aux.Carnet, aux.Name, aux.LastName)
+		fmt.Println("# 1.Aceptar Estudiante                 #")
+		fmt.Println("# 2.Rechazar Estudiante                #")
+		fmt.Println("# 3.Volver al menú principal           #")
+		fmt.Println("#                                      #")
+		fmt.Println("########################################")
+		fmt.Println("> Elige una opción: ")
+
+		_, err := fmt.Scanln(&option)
+		if err == nil {
+			switch option {
+			case 1:
+				listaEstudiantes.AddSort(aux.Carnet, aux.Name, aux.LastName, aux.Password)
+				fmt.Printf("> Se registro a %d en el sistema", aux.Carnet)
+				fmt.Println()
+				colaPendientes.Dequeue()
+
+				//Regresa al menú principal si la cola queda vacía
+				if colaPendientes.IsEmpty() {
+					fmt.Println("> No hay mas estudiantes pendientes en la cola")
+					fmt.Println("> Devuelta al menú principal")
+					option = 3
+				}
+			case 2:
+				fmt.Println("> Se rechazo al estudiante")
+				colaPendientes.Dequeue()
+
+				//Regresa al menú principal si la cola queda vacía
+				if colaPendientes.IsEmpty() {
+					fmt.Println("> No hay mas estudiantes pendientes en la cola")
+					fmt.Println("> Devuelta al menú principal")
+					option = 3
+				}
+			case 3:
+				fmt.Println("> Devuelta al menú principal")
+				option = 3
+			default:
+				fmt.Println("> Ingresa una opción valida")
+			}
+		} else {
+			fmt.Println("> Ocurrio un error:", err)
 		}
 	}
 }
