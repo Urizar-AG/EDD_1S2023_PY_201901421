@@ -13,6 +13,7 @@ import (
 
 var colaPendientes = Estructuras.NewCola()
 var listaEstudiantes = Estructuras.NewDoublyLinkedList()
+var bitacoraAdministrador = Estructuras.NewStack()
 
 const formatoFechaHora string = "02/01/2006 03:04:05 PM"
 
@@ -43,6 +44,8 @@ func main() {
 			fmt.Scanln(&password)
 
 			if user == "admin" && password == "admin" {
+				sesion := time.Now().Format(formatoFechaHora)
+				bitacoraAdministrador.Push("Se Inició Sesión", sesion)
 				menuAdministrador()
 			} else {
 				if !(listaEstudiantes.IsEmpty()) {
@@ -164,6 +167,10 @@ func verEstudiantesPendientes() {
 				fmt.Println()
 				colaPendientes.Dequeue()
 
+				//Registrando en la bitácora del administrador
+				date := time.Now().Format(formatoFechaHora)
+				bitacoraAdministrador.Push("Se Aceptó a Estudiante ", date)
+
 				//Regresa al menú principal si la cola queda vacía
 				if colaPendientes.IsEmpty() {
 					fmt.Println("> No hay mas estudiantes pendientes en la cola")
@@ -173,6 +180,10 @@ func verEstudiantesPendientes() {
 			case 2:
 				fmt.Println("> Se rechazo al estudiante")
 				colaPendientes.Dequeue()
+
+				//Registrando en la bitácora del administrador
+				date := time.Now().Format(formatoFechaHora)
+				bitacoraAdministrador.Push("Se Rechazó a Estudiante ", date)
 
 				//Regresa al menú principal si la cola queda vacía
 				if colaPendientes.IsEmpty() {
