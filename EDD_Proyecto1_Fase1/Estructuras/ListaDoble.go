@@ -20,6 +20,7 @@ type DoublyLinkedList struct {
 
 func (d *DoublyLinkedList) AddSort(carnet int, name string, lastName string, password string) {
 	newNode := &NodeD{carnet: carnet, name: name, lastName: lastName, password: password, next: nil, prev: nil}
+	newNode.Bitacora = NewStack() //Inicializa la bitacora del estudiante
 	//La lista está vacía
 	if d.IsEmpty() {
 		d.first = newNode
@@ -50,11 +51,29 @@ func (d *DoublyLinkedList) AddSort(carnet int, name string, lastName string, pas
 	d.length++
 }
 
+//Búsqueda por valor
+func (d *DoublyLinkedList) SearchStudent(carnet int, password string) (*NodeD, bool) {
+	tmp := d.first
+	for tmp != nil {
+		if tmp.carnet == carnet {
+			if tmp.password == password {
+				//Las credenciales son correctas
+				return tmp, true
+			}
+			//El carnet coincide pero la contraseña no
+			return tmp, false
+		}
+		tmp = tmp.next
+	}
+	//No encontro ninguna coincidencia
+	return nil, false
+}
+
 func (d *DoublyLinkedList) PrintStudents() {
 	tmp := d.first
 	fmt.Println("########################################")
-	fmt.Println("#        Listado de Estudiantes        #")
-	fmt.Printf("#              Total: %d               #\n", d.length)
+	fmt.Println("         Listado de Estudiantes         ")
+	fmt.Printf("               Total: %d                \n", d.length)
 	fmt.Println("########################################")
 	for tmp != nil {
 		fmt.Printf("Carnet: %d, Nombre: %s %s \n", tmp.carnet, tmp.name, tmp.lastName)

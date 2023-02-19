@@ -8,10 +8,13 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var colaPendientes = Estructuras.NewCola()
 var listaEstudiantes = Estructuras.NewDoublyLinkedList()
+
+const formatoFechaHora string = "02/01/2006 03:04:05 PM"
 
 func main() {
 
@@ -42,14 +45,18 @@ func main() {
 			if user == "admin" && password == "admin" {
 				menuAdministrador()
 			} else {
-				userInt, _ := strconv.Atoi(user) //Convierte String a Int
-				fmt.Println("Usuario: ", userInt)
+				if !(listaEstudiantes.IsEmpty()) {
+					userInt, _ := strconv.Atoi(user) //Convierte String a Int
+					loginUsuarios(userInt, password)
+				} else {
+					fmt.Println("> No existe ningun usuario en el sistema")
+				}
 			}
 		case 2:
 			fmt.Println("> Cerrando programa...")
 			option = 2
 		default:
-			fmt.Println("> Ingresa una opción valida")
+			fmt.Println("> Ingresa una opción válida")
 			fmt.Println()
 		}
 	}
@@ -109,9 +116,22 @@ func menuAdministrador() {
 			fmt.Println("Cerrando Sesión...")
 			option = 5
 		default:
-			fmt.Println("Ingresa una opción valida")
+			fmt.Println("Ingresa una opción válida")
 			fmt.Println()
 		}
+	}
+}
+
+func loginUsuarios(carnet int, password string) {
+	user, success := listaEstudiantes.SearchStudent(carnet, password)
+	if user != nil && success {
+		sesion := time.Now().Format(formatoFechaHora) //Obtiene la fecha y hora de inicio de sesión
+		user.Bitacora.Push("Inicio Sesión", sesion)
+		fmt.Printf("> Se inicio sesión correctamente, %s", sesion)
+		fmt.Println()
+		user.Bitacora.PrintStack()
+	} else {
+		fmt.Println("> Credenciales incorrectas")
 	}
 }
 
@@ -164,7 +184,7 @@ func verEstudiantesPendientes() {
 				fmt.Println("> Devuelta al menú principal")
 				option = 3
 			default:
-				fmt.Println("> Ingresa una opción valida")
+				fmt.Println("> Ingresa una opción válida")
 			}
 		} else {
 			fmt.Println("> Ocurrio un error:", err)
