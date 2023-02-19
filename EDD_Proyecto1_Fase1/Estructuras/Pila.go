@@ -1,5 +1,7 @@
 package Estructuras
 
+import "fmt"
+
 type NodeS struct {
 	Description string
 	Sesion      string
@@ -7,28 +9,40 @@ type NodeS struct {
 }
 
 type Stack struct {
-	Length int
-	Top    *NodeS
+	length int
+	top    *NodeS
 }
 
 func (s *Stack) Push(description string, sesion string) {
 	newNode := &NodeS{description, sesion, nil}
 	if s.IsEmpty() {
-		s.Top = newNode
+		s.top = newNode
 	} else {
-		newNode.next = s.Top
-		s.Top = newNode
+		newNode.next = s.top
+		s.top = newNode
 	}
-	s.Length++
+	s.length++
 }
 
 func (s *Stack) Peek() *NodeS {
-	tmp := s.Top
+	tmp := s.top
 	return tmp
 }
 
 func (s *Stack) IsEmpty() bool {
-	return s.Length == 0
+	return s.length == 0
+}
+
+func (s *Stack) PrintStack() {
+	tmp := s.top
+	fmt.Println("########################################")
+	fmt.Println("                Bitácora                ")
+	fmt.Println("########################################")
+	for tmp != nil {
+		fmt.Println(tmp.Description, tmp.Sesion)
+		tmp = tmp.next
+	}
+	fmt.Println("########################################")
 }
 
 // Crear una pila
