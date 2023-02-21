@@ -46,6 +46,7 @@ func main() {
 			if user == "admin" && password == "admin" {
 				sesion := time.Now().Format(formatoFechaHora)
 				bitacoraAdministrador.Push("Se Inició Sesión", sesion)
+				bitacoraAdministrador.GraphStack()
 				menuAdministrador()
 			} else {
 				if !(listaEstudiantes.IsEmpty()) {
@@ -95,6 +96,7 @@ func menuAdministrador() {
 		case 2:
 			if !(listaEstudiantes.IsEmpty()) {
 				listaEstudiantes.PrintStudents()
+				listaEstudiantes.GraphDoublyLinkedList()
 			} else {
 				fmt.Println("> No existen estudiantes registrados en el sistema")
 			}
@@ -112,9 +114,11 @@ func menuAdministrador() {
 				fmt.Println(err)
 			} else {
 				colaPendientes.Enqueue(carnet, name, lastName, password)
+				colaPendientes.GraphQueue()
 			}
 		case 4:
 			cargaMasiva()
+			colaPendientes.GraphQueue()
 		case 5:
 			fmt.Println("Cerrando Sesión...")
 			option = 5
@@ -170,6 +174,9 @@ func verEstudiantesPendientes() {
 				//Registrando en la bitácora del administrador
 				date := time.Now().Format(formatoFechaHora)
 				bitacoraAdministrador.Push("Se Aceptó a Estudiante ", date)
+				bitacoraAdministrador.GraphStack()
+				colaPendientes.GraphQueue()
+				Estructuras.GenerarJSON("./AlumnosAceptados.json", listaEstudiantes)
 
 				//Regresa al menú principal si la cola queda vacía
 				if colaPendientes.IsEmpty() {
@@ -184,7 +191,8 @@ func verEstudiantesPendientes() {
 				//Registrando en la bitácora del administrador
 				date := time.Now().Format(formatoFechaHora)
 				bitacoraAdministrador.Push("Se Rechazó a Estudiante ", date)
-
+				bitacoraAdministrador.GraphStack()
+				colaPendientes.GraphQueue()
 				//Regresa al menú principal si la cola queda vacía
 				if colaPendientes.IsEmpty() {
 					fmt.Println("> No hay mas estudiantes pendientes en la cola")
@@ -213,6 +221,7 @@ func cargaMasiva() {
 	if errOpen != nil {
 		fmt.Println("> No fue posible cargar el archivo, error:", errOpen)
 	} else {
+		defer file.Close()
 		csvReader := csv.NewReader(file)
 		csvReader.Read() //Lee la primera línea para saltar encabezados
 
@@ -224,6 +233,7 @@ func cargaMasiva() {
 			}
 			if err != nil {
 				fmt.Println("> Ocurrio un error al leer el archivo:", errOpen)
+				break
 			} else {
 				var name, lastName string
 
@@ -241,5 +251,5 @@ func cargaMasiva() {
 			}
 		}
 	}
-	defer file.Close()
+	//defer file.Close()
 }
