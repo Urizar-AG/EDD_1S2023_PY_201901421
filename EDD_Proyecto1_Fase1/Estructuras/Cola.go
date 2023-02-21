@@ -1,6 +1,9 @@
 package Estructuras
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 type NodeQ struct {
 	Carnet   int
@@ -52,7 +55,51 @@ func (q *Queue) IsEmpty() bool {
 	return q.Length == 0
 }
 
-//Crear una Cola
+func (q *Queue) PrintQueue() {
+	tmp := q.head
+	i := 0
+	for tmp != nil {
+		fmt.Printf("Usuario %d , Carnet: %d, Nombre: %s, Apellidos %s, Contraseña: %s", i, tmp.Carnet, tmp.Name, tmp.LastName, tmp.Password)
+		fmt.Println()
+		i++
+		tmp = tmp.next
+	}
+}
+
+func (q *Queue) GraphQueue() {
+	nameDot := "./EstudiantesPendientes.dot"
+	nameImage := "EstudiantesPendientes.svg"
+	text := "digraph Q {\n"
+	text += "label=\"Estudiantes Pendientes\";\n"
+	text += "labelloc=\"t\";\n"
+	text += "rankdir=LR;\n"
+	text += "node[shape=record style=filled width=2.2]\n"
+	text += "nA[label=\"null\"];\n"
+
+	tmp := q.head
+	var fullName string
+	//Creando los nodos
+	for i := 0; i < q.Length; i++ {
+		fullName = tmp.Name + " " + tmp.LastName
+		text = text + "n" + strconv.Itoa(i) + "[label=\"{" + strconv.Itoa(tmp.Carnet) + `\n` + fullName + "|}\"];\n"
+		tmp = tmp.next
+	}
+	//Enlazando los nodos
+	var j int
+	var cont int
+	for i := 0; i < q.Length-1; i++ {
+		j = i + 1
+		text = text + "n" + strconv.Itoa(i) + "->n" + strconv.Itoa(j) + ";\n"
+		cont = j
+	}
+	text = text + "n" + strconv.Itoa(cont) + "->nA;\n"
+	text += "}"
+
+	generarDot(nameDot, text)
+	convertirDot(nameDot, nameImage)
+}
+
+// Crear una Cola
 func NewCola() *Queue {
 	return &Queue{0, nil, nil}
 }
