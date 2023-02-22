@@ -55,6 +55,21 @@ func (q *Queue) IsEmpty() bool {
 	return q.Length == 0
 }
 
+func (q *Queue) SearchStudent(carnet int) bool {
+	// Si la lista no está vacía
+	if !(q.IsEmpty()) {
+		tmp := q.head
+		for tmp != nil {
+			//Encontro coincidencia
+			if tmp.Carnet == carnet {
+				return true
+			}
+			tmp = tmp.next
+		}
+	}
+	return false
+}
+
 func (q *Queue) PrintQueue() {
 	tmp := q.head
 	i := 0
