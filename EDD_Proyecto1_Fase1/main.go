@@ -113,17 +113,16 @@ func menuAdministrador() {
 			if err != nil {
 				fmt.Println(err)
 			} else {
-				colaPendientes.Enqueue(carnet, name, lastName, password)
-				colaPendientes.GraphQueue()
+				validarRepetidos(carnet, name, lastName, password)
 			}
 		case 4:
 			cargaMasiva()
 			colaPendientes.GraphQueue()
 		case 5:
-			fmt.Println("Cerrando Sesión...")
+			fmt.Println("> Cerrando Sesión...")
 			option = 5
 		default:
-			fmt.Println("Ingresa una opción válida")
+			fmt.Println("> Ingresa una opción válida")
 			fmt.Println()
 		}
 	}
@@ -247,9 +246,32 @@ func cargaMasiva() {
 					lastName = fullName[0]
 				}
 				password := student[2]
-				colaPendientes.Enqueue(carnet, name, lastName, password)
+				//colaPendientes.Enqueue(carnet, name, lastName, password)
+				validarRepetidos(carnet, name, lastName, password)
 			}
 		}
 	}
 	//defer file.Close()
+}
+
+// Valida si el carnet existe o no, y agrega a la cola de pendientes
+func validarRepetidos(carnet int, name string, lastName string, password string) {
+	resCola := colaPendientes.SearchStudent(carnet)
+	if !(resCola) {
+		//El estudiante no existe en la cola
+		resLista, _ := listaEstudiantes.SearchStudent(carnet, password)
+		if resLista == nil {
+			//El estudiante no existe en la lista del sistema
+			colaPendientes.Enqueue(carnet, name, lastName, password)
+			colaPendientes.GraphQueue()
+		} else {
+			//Ya existe el estudiante en la lista del sistema
+			fmt.Printf("> No fue posible registrar a %d, el carnet ya existe en el sistema", carnet)
+			fmt.Println()
+		}
+	} else {
+		//Ya existe el carnet en la cola
+		fmt.Printf("> No fue posible registrar a %d, el carnet ya existe en la cola de pendientes", carnet)
+		fmt.Println()
+	}
 }
