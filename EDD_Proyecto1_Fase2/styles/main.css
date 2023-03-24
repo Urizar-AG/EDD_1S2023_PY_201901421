@@ -20,7 +20,7 @@ section {
 
 section.side {
     background: #08AEF5;
-    background: linear-gradient(270deg, #000046, #08AEF5); 
+    background: linear-gradient(270deg, #000046, #08AEF5, #ffffff); 
 }
 
 .side img {
@@ -92,6 +92,16 @@ button.submit {
     font-weight: bold;
     background-color: #08AEF5;
     cursor: pointer; /* El cursor tome la forma de manita */
+}
+
+button:hover {
+    color: #ffffff;
+    background: linear-gradient(270deg, #000046, #08AEF5, #ffffff); 
+}
+
+button:active {
+    color: #000000;
+    background: linear-gradient(270deg, #000046, #08AEF5); 
 }
 
 /* responsive */

@@ -12,6 +12,7 @@ function login(event) {
     }else {
         if (username.value === "Admin" && password.value === "Admin") {
             alert("Bienvenido Administrador")
+            window.location.href= "pages/administrador.html"
         }else if (Number.isNaN(Number(username.value))) {
             username.value = ""
             password.value = ""
