@@ -1,0 +1,44 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Oxygen Mono', monospace;
+}
+
+.container {
+    display: grid;
+    gap: 1em; /* Separacion entre las filas y columnas */
+    min-height: 100vh;
+    grid-template-rows: 100px auto;
+    /* Distribución de los componentes */
+    grid-template-areas: 
+        "header header" 
+        "arbol arbol"
+    ;
+}
+
+.header-container {
+    grid-area: header; /* "Id" con el que lo indentifica el grid en el que está contenido */
+    display: flex;
+    background: linear-gradient(90deg, #ffffff,  #08AEF5, #000046); 
+}
+
+.header-container .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.header-container .logo img {
+    height: 60px;
+    width: 225px;
+    max-width: 100%;
+}
+
+.arbol {
+    grid-area: arbol;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
