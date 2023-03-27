@@ -17,6 +17,15 @@ btnLogout.addEventListener("click",  (e) => {
 const btnVerAlumnos = document.getElementById('ver-alumnos')
 btnVerAlumnos.addEventListener('click', llenarTabla)
 
+const bntVerArbol = document.getElementById('ver-arbol')
+bntVerArbol.addEventListener('click', (e) => {
+    if (avl != null) {
+        window.location.href = "reporteAVL.html";
+    }else {
+        alert("No hay alumnos registrados en el sistema")
+    }
+})
+
 const btnCargaMasiva = document.getElementById('carga-masiva')
 btnCargaMasiva.addEventListener('click', cargaMasiva)
 
