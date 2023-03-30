@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oxygen Mono', monospace;
+}
+
+body {
+    min-height: 100vh;
+    /* background-color: lavender; */
+    display: flex;
+}
+
+.side {
+    position: relative;
+    min-height: 100vh;
+    width: 270px;
+    transition: width 0.2s;
+    background: linear-gradient(180deg, #ffffff,  #08AEF5, #000046);
+}
+
+.side  h1{
+    display: flex;
+    margin: 20px 20px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* background-color: aqua; */
+}
+
+/* .side h1 img {
+    width: 150px;
+    margin-left: 10px;
+    background-color: #000046;
+} */
+
+.side ul {
+    list-style: none;
+    overflow: hidden;
+}
+
+.side li {
+    display: flex;
+    align-items: center;
+    /* cursor: pointer; */
+    padding: 15px 20px;
+    letter-spacing: 1px;
+    /* background-color: lawngreen; */
+}
+
+.side li i {
+    font-size: 1.8em;
+    margin-right: 32px;
+}
+
+.side li:hover {
+    color: #ffffff;
+    background: linear-gradient(270deg, #000046, #08AEF5); 
+    border-radius: 12px;
+}
+
+.side li button{
+    border: none;
+    width: 30px;
+    background-color: transparent;
+    cursor: pointer;
+    /* background-color: aqua; */
+}
+
+i.fa-solid:active{
+    color: #ffffff
+}
+
+.side li input{
+    width: 195px;
+}
+
+.side .btn {
+    background-color: #08AEF5;
+    color: white;
+    position: absolute;
+    top: 28px;
+    right: 0;
+    transform: translateX(100%);
+    outline: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    cursor: pointer;
+}
+
+.side i.fa-chevron-right {
+    display: none;
+}
+
+.side.closed {
+    width: 0px;
+}
+
+.side.closed i.fa-chevron-left {
+    display: none;
+}
+
+.side.closed i.fa-chevron-right {
+    display: block;
+}
+
+.main {
+    padding: 80px;
+    /* background-color: #e6e6e6; */
+}
+
+/* .main p {
+    background-color: lawngreen;
+} */
+
+@media (max-width:600px) {
+    .side.closed {
+        width: 0px;
+    }
+
+    .main {
+        /* background-color: lightcoral; */
+        padding: 48px;
+    }
+}

@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PanelEstudiante</title>
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen+Mono&display=swap" rel="stylesheet">
+    <!-- Simbolos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilo -->
+    <link rel="stylesheet" href="../styles/estudiante.css">
+</head>
+<body>
+    <div class="side">
+        <h1>
+            <img src="../images/logo2.png" alt="logo">
+        </h1>
+        <ul>
+            <li>
+                <button type="button" id="buscar"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <input type="text" id="directorio" placeholder="/Documentos/Cursos">
+            </li>
+            <li>
+                <button type="button" id="crear-carpeta"><i class="fa-solid fa-folder-plus"></i></button>
+                <input type="text" id="nombre-nueva-carpeta" placeholder="2023">
+            </li>
+            <li>
+                <button type="button" id="eliminar-carpeta"><i class="fa-solid fa-folder-minus"></i></button>
+                <input type="text" id="nombre-eliminar-carpeta" placeholder="2023">
+            </li>
+            <li>
+                <button type="button" id="reporte-carpetas"><i class="fa-solid fa-folder-tree"></i></button>
+                Reporte Carpetas
+            </li>
+            <li>
+                <button type="button" id="reporte-archivos"><i class="fa-solid fa-file-export"></i></button>
+                Reporte Archivos
+            </li>
+            <li>
+                <button type="button" id="reporte-bitacora"><i class="fa-solid fa-book"></i></button>
+                Bitácora
+            </li>
+            <li>
+                <button type="button" id="logout"><i class="fa-solid fa-right-from-bracket"></i></button>
+                Cerrar Sesión
+            </li>
+            <li>
+                <button type="button" id="carga-masiva"><i class="fa-solid fa-upload"></i></button>
+                <input type="file" id="input-files"  placeholder="Subir Archivo" multiple>
+            </li>
+        </ul>
+        <button class="btn" id="ocultar">
+            <i class="fas fa-chevron-right"></i>
+            <i class="fas fa-chevron-left"></i>
+        </button>
+    </div>
+    <div class="main">
+    </div>
+    <script type="module" src="../scripts/estudiante.js"></script>
+</body>
+</html>

@@ -127,6 +127,26 @@ class AVL {
         return this.RSI(node)
     }
     
+    getById(node, id) {
+        let aux = null
+        if (node === null) {
+            aux = null
+        }else {
+            //El id coincide con el nodo
+            if (node.carnet === id) {
+                aux = node
+                // return aux
+            }else if (node.carnet > id) {
+                //El id buscado es menor al id del nodo en iteración, busca al lado izquierdo
+                aux = this.getById(node.left, id)
+            } else if (node.carnet < id){
+                //El id buscado es mayor al id del nodo en iteración, busca al lado derecho
+                aux = this.getById(node.right, id)
+            }
+        }
+        return aux
+    }
+
     getHeight(node) {
         return node != null ? node.height : -1
     }
