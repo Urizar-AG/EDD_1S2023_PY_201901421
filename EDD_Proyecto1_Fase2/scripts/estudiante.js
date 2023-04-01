@@ -11,6 +11,14 @@ if (localStorage.getItem("ArbolAVL") !== null) {
 /*--------------------- Recupera el alumno que está en sesión ---------------------*/
 let usuario = avl.getById(avl.root, Number(localStorage.getItem('usuarioEnSesion')))
 
+/*--------------------- Carga la carpeta raíz al cargar el body ---------------------*/
+const body = document.querySelector('body')
+body.onload = cargarCarptaRaiz()
+function cargarCarptaRaiz() {
+    document.getElementById('directorio').value = "/"
+    buscarDirectorio()
+}
+
 /*--------------------- Ocultar la barra lateral de la interfaz gráfica ---------------------*/
 const side = document.querySelector('.side');
 let btnOcultar = document.getElementById('ocultar')
@@ -38,6 +46,7 @@ function buscarDirectorio() {
         let res = carpetas.getDir(directorio.value)
         if (res !== null) {
             console.log("Carpeta obtenida: ", res)
+            imprimirCarpetas(res)
         }else {
             alert("No fue posible acceder a la ruta especificada")
         }
@@ -62,6 +71,7 @@ function crearDirectorio() {
             usuario.folders = carpetas
             localStorage.setItem("ArbolAVL", JSON.stringify(avl.root))
             alert("Carpeta creada exitosamente")
+            buscarDirectorio()
         }else {
             alert("No fue posible crear la carpeta")
         }
@@ -86,6 +96,7 @@ function eliminarDirectorio() {
             usuario.folders = carpetas
             localStorage.setItem("ArbolAVL", JSON.stringify(avl.root))
             alert("Carpeta eliminada exitosamente")
+            buscarDirectorio()
         }else {
             alert("No fue posible eliminar la carpeta")
         }
@@ -100,3 +111,25 @@ btnReporteCarpetas.addEventListener('click', () => {
     window.open ('reporteNArio.html', "_newtab" ); 
 })
 
+/*--------------------- Muestra las carpetas en la interfaz gráfica ---------------------*/
+function imprimirCarpetas(carpeta) {
+    //Agrega las carpetas
+    document.getElementById('main').innerHTML = ""
+    let card = null
+    let icono = null
+    let tmp = carpeta.first
+    while (tmp) {
+        card = document.createElement('div')
+        card.className += "card";
+        icono = document.createElement('div')
+        //concatena las clases
+        icono.className += 'fa-regular';
+        icono.className += " fa-folder";
+        icono.className += " fa-2xl";
+
+        card.appendChild(icono)
+        card.innerHTML += tmp.name
+        document.getElementById('main').appendChild(card)
+        tmp = tmp.next
+    }
+}
