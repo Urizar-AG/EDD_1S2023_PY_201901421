@@ -1,4 +1,5 @@
 import { CircularLinkedList } from "./ListaCircular.js"
+import { nodeNAry, NAryTree } from "./ArbolNArio.js";
 
 class nodeAVL {
     constructor(name, carnet, password, rootDirectory) {
@@ -8,6 +9,7 @@ class nodeAVL {
         this.password = password
         this.rootDirectory = rootDirectory
         this.activityLogs = new CircularLinkedList()
+        this.folders = new NAryTree()
 
         //Atributos propios del árbol
         this.height = 0
@@ -127,6 +129,26 @@ class AVL {
         return this.RSI(node)
     }
     
+    getById(node, id) {
+        let aux = null
+        if (node === null) {
+            aux = null
+        }else {
+            //El id coincide con el nodo
+            if (node.carnet === id) {
+                aux = node
+                // return aux
+            }else if (node.carnet > id) {
+                //El id buscado es menor al id del nodo en iteración, busca al lado izquierdo
+                aux = this.getById(node.left, id)
+            } else if (node.carnet < id){
+                //El id buscado es mayor al id del nodo en iteración, busca al lado derecho
+                aux = this.getById(node.right, id)
+            }
+        }
+        return aux
+    }
+
     getHeight(node) {
         return node != null ? node.height : -1
     }
@@ -139,7 +161,7 @@ class AVL {
             dot = dot + this.writeDot(this.root, 0)
             dot = dot + "}"
         }
-        console.log(dot);
+        //console.log(dot);
         return dot
     }
 

@@ -20,7 +20,8 @@ btnVerAlumnos.addEventListener('click', llenarTabla)
 const bntVerArbol = document.getElementById('ver-arbol')
 bntVerArbol.addEventListener('click', (e) => {
     if (avl != null) {
-        window.location.href = "reporteAVL.html";
+        window.open ('reporteAVL.html', "_newtab" ); 
+        //window.location.href = "reporteAVL.html";
     }else {
         alert("No hay alumnos registrados en el sistema")
     }
@@ -81,8 +82,8 @@ function inorden(node) {
         const tr = document.createElement('tr')
         const td1 = tr.appendChild(document.createElement('td'))
         const td2 = tr.appendChild(document.createElement('td'))
-        td1.innerHTML = node.name
-        td2.innerHTML = node.carnet
+        td1.innerHTML = node.carnet
+        td2.innerHTML = node.name
         document.getElementById('body-table').appendChild(tr)
         inorden(node.right)
     }
@@ -93,8 +94,8 @@ function preorden(node) {
         const tr = document.createElement('tr')
         const td1 = tr.appendChild(document.createElement('td'))
         const td2 = tr.appendChild(document.createElement('td'))
-        td1.innerHTML = node.name
-        td2.innerHTML = node.carnet
+        td1.innerHTML = node.carnet
+        td2.innerHTML = node.name
         document.getElementById('body-table').appendChild(tr)
         preorden(node.left)
         preorden(node.right)      
@@ -108,8 +109,8 @@ function postorden(node) {
         const tr = document.createElement('tr')
         const td1 = tr.appendChild(document.createElement('td'))
         const td2 = tr.appendChild(document.createElement('td'))
-        td1.innerHTML = node.name
-        td2.innerHTML = node.carnet
+        td1.innerHTML = node.carnet
+        td2.innerHTML = node.name
         document.getElementById('body-table').appendChild(tr) 
     }
 }
