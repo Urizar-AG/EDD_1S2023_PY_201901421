@@ -94,7 +94,7 @@ body {
 
 button:hover {
     color: #ffffff;
-    background: linear-gradient(270deg, #000046, #08AEF5, #ffffff); 
+    background: linear-gradient(270deg, #000046, #08AEF5); 
 }
 
 button:active {
