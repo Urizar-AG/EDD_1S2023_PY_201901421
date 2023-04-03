@@ -52,7 +52,7 @@ function buscarDirectorio() {
         let res = carpetas.getDir(directorio.value)
         if (res !== null) {
             console.log("Carpeta obtenida: ", res)
-            imprimirCarpetas(res)
+            imprimir(res)
         }else {
             alert("No fue posible acceder a la ruta especificada")
         }
@@ -73,10 +73,11 @@ function crearDirectorio() {
         carpetas.root = usuario.folders.root
         carpetas.total = usuario.folders.total
         let res = carpetas.add(directorio.value, nombreCarpeta.value)
-        if (res) {
+        if (res !== null) {
             usuario.folders = carpetas
             localStorage.setItem("ArbolAVL", JSON.stringify(avl.root))
-            registrarActividad(nombreCarpeta.value, "crear")
+            // registrarActividad(nombreCarpeta.value, "crear")
+            registrarActividad(res, "crear")
             alert("Carpeta creada exitosamente")
             buscarDirectorio()
         }else {
@@ -133,8 +134,8 @@ btnReporteBitacora.addEventListener('click', () => {
     }
 })
 
-/*--------------------- Muestra las carpetas en la interfaz gráfica ---------------------*/
-function imprimirCarpetas(carpeta) {
+/*--------------------- Muestra las carpetas y archivos en la interfaz gráfica ---------------------*/
+function imprimir(carpeta) {
     //Agrega las carpetas
     document.getElementById('main').innerHTML = ""
     let card = null
@@ -180,10 +181,10 @@ function registrarActividad(name, tipo) {
     hora = fechaHora[1]
 
     if (tipo === 'crear') {
-        actividad = "Se creo la carpeta " + name
+        actividad = "Se creo la carpeta \\\"" + name + "\\\""
         bitacora.add(actividad, fecha, hora)
     }else {
-        actividad = "Se elimino la carpeta " + name
+        actividad = "Se elimino la carpeta \\\"" + name + "\\\""
         bitacora.add(actividad, fecha, hora)
     }
 }
