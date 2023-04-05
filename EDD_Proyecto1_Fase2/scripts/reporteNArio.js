@@ -1,5 +1,6 @@
 import { AVL } from "../Estructuras/ArbolAVL.js";
 import { NAryTree } from "../Estructuras/ArbolNArio.js";
+import { CircularJSON } from "./circular-json.js";
 
 const body = document.querySelector('body')
 body.onload = generarImagen
@@ -7,7 +8,7 @@ body.onload = generarImagen
 function generarImagen() {
     let url = 'https://quickchart.io/graphviz?graph=';
     let avl = new AVL()
-    avl.root = JSON.parse(localStorage.getItem('ArbolAVL'))
+    avl.root = CircularJSON.parse(JSON.parse(localStorage.getItem('ArbolAVL')))
     let usuario = avl.getById(avl.root, Number(localStorage.getItem('usuarioEnSesion')))
     let carpetas = new NAryTree()
     carpetas.root = usuario.folders.root

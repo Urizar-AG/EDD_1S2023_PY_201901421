@@ -1,12 +1,13 @@
 import { AVL } from "../Estructuras/ArbolAVL.js";
 import { NAryTree } from "../Estructuras/ArbolNArio.js";
 import { CircularLinkedList } from "../Estructuras/ListaCircular.js";
+import { CircularJSON } from "./circular-json.js";
 
 //Recupera los datos de localStorage del árbol y los almacena
 let avl = null
 if (localStorage.getItem("ArbolAVL") !== null) {
     avl = new AVL()
-    avl.root = JSON.parse(localStorage.getItem("ArbolAVL"))
+    avl.root = CircularJSON.parse(JSON.parse(localStorage.getItem("ArbolAVL")))
 }
 
 /*--------------------- Recupera el alumno que está en sesión ---------------------*/
@@ -75,8 +76,7 @@ function crearDirectorio() {
         let res = carpetas.add(directorio.value, nombreCarpeta.value)
         if (res !== null) {
             usuario.folders = carpetas
-            localStorage.setItem("ArbolAVL", JSON.stringify(avl.root))
-            // registrarActividad(nombreCarpeta.value, "crear")
+            localStorage.setItem("ArbolAVL", JSON.stringify(CircularJSON.stringify(avl.root)))
             registrarActividad(res, "crear")
             alert("Carpeta creada exitosamente")
             buscarDirectorio()
@@ -102,7 +102,7 @@ function eliminarDirectorio() {
         let res = carpetas.removeDir(directorio.value, nombreCarpeta.value)
         if (res) {
             usuario.folders = carpetas
-            localStorage.setItem("ArbolAVL", JSON.stringify(avl.root))
+            localStorage.setItem("ArbolAVL", JSON.stringify(CircularJSON.stringify(avl.root)))
             registrarActividad(nombreCarpeta.value, "eliminar")
             alert("Carpeta eliminada exitosamente")
             buscarDirectorio()
