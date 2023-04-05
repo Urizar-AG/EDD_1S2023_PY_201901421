@@ -12,10 +12,6 @@ if (localStorage.getItem("ArbolAVL") !== null) {
 
 /*--------------------- Recupera el alumno que está en sesión ---------------------*/
 let usuario = avl.getById(avl.root, Number(localStorage.getItem('usuarioEnSesion')))
-//Bitácora del usuario, existe solamente durante la sesión
-let bitacora = new CircularLinkedList()
-bitacora.head = usuario.activityLogs.head
-bitacora.last = usuario.activityLogs.last
 
 /*--------------------- Carga la carpeta raíz al cargar el body ---------------------*/
 const body = document.querySelector('body')
@@ -123,11 +119,10 @@ btnReporteCarpetas.addEventListener('click', () => {
 /*--------------------- Reporte De Bitácora ---------------------*/
 const btnReporteBitacora = document.getElementById('reporte-bitacora')
 btnReporteBitacora.addEventListener('click', () => {
+    let bitacora = new CircularLinkedList()
+    bitacora.head = usuario.activityLogs.head
+    bitacora.last = usuario.activityLogs.last
     if (bitacora.head !== null) {
-        let cadena = ""
-        cadena = bitacora.writeDot()
-        //Almacena el dot en en localStorage para recuperarlo en la página del reporte
-        localStorage.setItem('actividadBitacora', cadena)
         window.open ('reporteBitacora.html', "_newtab" ); 
     }else {
         alert('La bitácora está vacía, no hay nada que reportar')
@@ -161,6 +156,12 @@ function imprimir(carpeta) {
 function registrarActividad(name, tipo) {
     //name -> nombre de la carpeta
     //tipo -> si la carpeta se creo o se elimino; crear, eliminar
+
+    //Recupera la bitácora del estudiante
+    let bitacora = new CircularLinkedList()
+    bitacora.head = usuario.activityLogs.head
+    bitacora.last = usuario.activityLogs.last
+
     let actividad = ""
     let fecha = ""
     let hora = ""
@@ -187,4 +188,6 @@ function registrarActividad(name, tipo) {
         actividad = "Se elimino la carpeta \\\"" + name + "\\\""
         bitacora.add(actividad, fecha, hora)
     }
+    usuario.activityLogs = bitacora
+    localStorage.setItem('ArbolAVL', JSON.stringify(CircularJSON.stringify(avl.root)))
 }
