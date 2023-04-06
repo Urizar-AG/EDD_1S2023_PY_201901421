@@ -13,7 +13,7 @@ body {
     /* Distribución de los componentes */
     grid-template-areas: 
         "header header" 
-        "arbol arbol"
+        "contenido contenido"
     ;
 }
 
@@ -36,8 +36,8 @@ body {
     max-width: 100%;
 }
 
-.arbol {
-    grid-area: arbol;
+.image-container {
+    grid-area: contenido;
     display: flex;
     justify-content: center;
     align-items: center;
