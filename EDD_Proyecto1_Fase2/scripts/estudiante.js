@@ -49,7 +49,7 @@ function buscarDirectorio() {
         carpetas.total = usuario.folders.total
         let res = carpetas.getDir(directorio.value)
         if (res !== null) {
-            console.log("Carpeta obtenida: ", res)
+            // console.log("Carpeta obtenida: ", res)
             imprimir(res)
         }else {
             alert("No fue posible acceder a la ruta especificada")
@@ -282,6 +282,7 @@ function imprimir(carpeta) {
     let card = null
     let icono = null
     let tmp = carpeta.first
+    let btn = null
     while (tmp) {
         card = document.createElement('div')
         card.className += "card";
@@ -290,9 +291,27 @@ function imprimir(carpeta) {
         icono.className += 'fa-regular';
         icono.className += " fa-folder";
         icono.className += " fa-2xl";
+        //botón
+        btn = document.createElement('button')
+        btn.innerHTML = tmp.name
+        btn.setAttribute('class', 'abrir')
+        btn.setAttribute('name', tmp.name)
+        btn.addEventListener('click', function (event) {
+            let boton = event.target
+            const directorio = document.getElementById('directorio')
+            //La carpeta está en el directorio raíz
+            if (directorio.value === "/") {
+                document.getElementById('directorio').value += boton.name
+                buscarDirectorio()
+            }else {
+                document.getElementById('directorio').value += "/" + boton.name
+                buscarDirectorio()
+            }
+        });
 
         card.appendChild(icono)
-        card.innerHTML += tmp.name
+        card.appendChild(btn)
+        // card.innerHTML += tmp.name
         document.getElementById('main').appendChild(card)
         tmp = tmp.next
     }
@@ -300,6 +319,7 @@ function imprimir(carpeta) {
     //Agrega los archivos de la carpeta
     let aux = ""
     let tmp2 = carpeta.files.root.down
+    btn = null
     while (tmp2) {
         card = document.createElement('div')
         card.className += "card";
@@ -319,8 +339,34 @@ function imprimir(carpeta) {
             icono.className += " fa-file-image";
             icono.className += " fa-2xl";
         }
+        //boton
+        btn = document.createElement('button')
+        btn.innerHTML = tmp2.name
+        btn.setAttribute('class', 'abrir')
+        btn.setAttribute('name', tmp2.name)
+        btn.addEventListener('click', function (event) {
+            let boton = event.target
+            const directorio = document.getElementById('directorio')
+            //Recupera la carpeta
+            let carpetas = new NAryTree()
+            carpetas.root = usuario.folders.root
+            carpetas.total = usuario.folders.total
+            let carpeta = carpetas.getDir(directorio.value)
+            //Archivos
+            let archivos = new sparseMatrix('Root')
+            archivos.root = carpeta.files.root
+            archivos.x = carpeta.files.x
+            archivos.y = carpeta.files.y
+            //Recupera el archivo clickeado
+            let archivo = archivos.getRow(boton.name)
+            localStorage.setItem('archivoNombre', archivo.name)
+            localStorage.setItem('archivoContenido', archivo.value)
+            window.open('visualizador.html', '_newtab')
+        });
+
         card.appendChild(icono)
-        card.innerHTML += tmp2.name
+        card.appendChild(btn)
+        // card.innerHTML += tmp2.name
         document.getElementById('main').appendChild(card)
         tmp2 = tmp2.down       
     }
