@@ -1,7 +1,10 @@
+import { nodeSparse, sparseMatrix } from "./MatrizDispersa.js";
+
 class nodeNAry {
     constructor(name, id) {
         this.name = name //Nombre de la carpeta
         this.id = id //Auxiliar para generar el gráfico
+        this.files = new sparseMatrix(name) //Archivos que contiene la carpeta
         this.next = null //Nodo siguiente
         this.first = null //Apuntador al primer nodo de la lista
     }

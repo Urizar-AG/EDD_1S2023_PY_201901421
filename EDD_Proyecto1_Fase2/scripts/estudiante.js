@@ -2,6 +2,7 @@ import { AVL } from "../Estructuras/ArbolAVL.js";
 import { NAryTree } from "../Estructuras/ArbolNArio.js";
 import { CircularLinkedList } from "../Estructuras/ListaCircular.js";
 import { CircularJSON } from "./circular-json.js";
+import { sparseMatrix } from "../Estructuras/MatrizDispersa.js";
 
 //Recupera los datos de localStorage del árbol y los almacena
 let avl = null
@@ -73,7 +74,7 @@ function crearDirectorio() {
         if (res !== null) {
             usuario.folders = carpetas
             localStorage.setItem("ArbolAVL", JSON.stringify(CircularJSON.stringify(avl.root)))
-            registrarActividad(res, "crear")
+            registrarActividad(res, "crear", "carpeta")
             alert("Carpeta creada exitosamente")
             buscarDirectorio()
         }else {
@@ -99,7 +100,7 @@ function eliminarDirectorio() {
         if (res) {
             usuario.folders = carpetas
             localStorage.setItem("ArbolAVL", JSON.stringify(CircularJSON.stringify(avl.root)))
-            registrarActividad(nombreCarpeta.value, "eliminar")
+            registrarActividad(nombreCarpeta.value, "eliminar", "carpeta")
             alert("Carpeta eliminada exitosamente")
             buscarDirectorio()
         }else {
@@ -129,6 +130,69 @@ btnReporteBitacora.addEventListener('click', () => {
     }
 })
 
+/*--------------------- Carga De Archivos ---------------------*/
+const btnCargarArchivos = document.getElementById('cargar-archivos')
+btnCargarArchivos.addEventListener('click', cargarArchivos)
+
+function cargarArchivos() {
+    const directorio = document.getElementById('directorio')
+    let files = document.getElementById('input-files').files //Obtiene los archivos
+    if (directorio.value.trim() !== "" && files.length > 0) {
+        //Recupera la carpeta
+        let carpetas = new NAryTree()
+        carpetas.root = usuario.folders.root
+        carpetas.total = usuario.folders.total
+        let res = carpetas.getDir(directorio.value)
+
+        if (res) {
+            try {
+                for (let i = 0; i < files.length; i++) {
+                    //Obtiene el nombre del archivo y su extensión
+                    let name = files[i].name 
+                    let extension = name.split('.')[1]
+
+                    let fr = new FileReader();
+                    //Es un archivo txt, se lee normal
+                    if (extension === 'txt') {
+                        fr.readAsText(files[i])
+                    }
+                    //Es un archivo pdf o imagen, se convierte a base64
+                    else {
+                        fr.readAsDataURL(files[i])
+                    }
+                    fr.addEventListener('load', () => {
+                        let archivos = new sparseMatrix("Root")
+                        archivos.root = res.files.root
+                        archivos.x = res.files.x
+                        archivos.y = res.files.y
+
+                        let archivo = archivos.addFile(name, 1)
+                        if (archivo !== null) {
+                            //Obtiene el archivo recien agregado, para agregar el contenido del archivo
+                            archivo = archivos.getRow(archivo)
+                            archivo.value = fr.result
+                            
+                            res.files.x = archivos.x
+                            res.files.y = archivos.y
+                            registrarActividad(archivo.name, "crear", "archivo")
+                        }
+                        usuario.folders = carpetas
+                        localStorage.setItem('ArbolAVL', JSON.stringify(CircularJSON.stringify(avl.root)))
+                        imprimir(res)
+                    });
+                }                
+            } catch (error) {
+                console.log("Ocurrio un error try/catch", error)
+            }
+        }else {
+            alert("No fue posible acceder a la ruta especificada")
+        }
+        document.getElementById('input-files').value = null
+    }else {
+        alert('La barra de direcciones está vacía o no hay ningun archivo seleccionado para cargar')
+    }
+}
+
 /*--------------------- Muestra las carpetas y archivos en la interfaz gráfica ---------------------*/
 function imprimir(carpeta) {
     //Agrega las carpetas
@@ -150,12 +214,41 @@ function imprimir(carpeta) {
         document.getElementById('main').appendChild(card)
         tmp = tmp.next
     }
+
+    //Agrega los archivos de la carpeta
+    let aux = ""
+    let tmp2 = carpeta.files.root.down
+    while (tmp2) {
+        card = document.createElement('div')
+        card.className += "card";
+        icono = document.createElement('div')
+        //concatena las clases
+        aux = tmp2.name.split('.')
+        if (aux[1] === "txt") {
+            icono.className += 'fa-regular';
+            icono.className += " fa-file-lines";
+            icono.className += " fa-2xl";
+        }else if (aux[1] === "pdf") {
+            icono.className += 'fa-regular';
+            icono.className += " fa-file-pdf";
+            icono.className += " fa-2xl";
+        }else {
+            icono.className += 'fa-regular';
+            icono.className += " fa-file-image";
+            icono.className += " fa-2xl";
+        }
+        card.appendChild(icono)
+        card.innerHTML += tmp2.name
+        document.getElementById('main').appendChild(card)
+        tmp2 = tmp2.down       
+    }
 }
 
 /*--------------------- Registra en la bitácora ---------------------*/
-function registrarActividad(name, tipo) {
+function registrarActividad(name, tipo, tipo2) {
     //name -> nombre de la carpeta
     //tipo -> si la carpeta se creo o se elimino; crear, eliminar
+    //tipo2 -> si es una carpeta o un archivo
 
     //Recupera la bitácora del estudiante
     let bitacora = new CircularLinkedList()
@@ -181,13 +274,19 @@ function registrarActividad(name, tipo) {
     fecha = fechaHora[0]
     hora = fechaHora[1]
 
-    if (tipo === 'crear') {
-        actividad = "Se creo la carpeta \\\"" + name + "\\\""
-        bitacora.add(actividad, fecha, hora)
+    if(tipo2 === "carpeta") {
+        if (tipo === 'crear') {
+            actividad = "Se creo la carpeta \\\"" + name + "\\\""
+            bitacora.add(actividad, fecha, hora)
+        }else {
+            actividad = "Se elimino la carpeta \\\"" + name + "\\\""
+            bitacora.add(actividad, fecha, hora)
+        }
     }else {
-        actividad = "Se elimino la carpeta \\\"" + name + "\\\""
+        actividad = "Se creo el archivo \\\"" + name + "\\\""
         bitacora.add(actividad, fecha, hora)
     }
+
     usuario.activityLogs = bitacora
     localStorage.setItem('ArbolAVL', JSON.stringify(CircularJSON.stringify(avl.root)))
 }
