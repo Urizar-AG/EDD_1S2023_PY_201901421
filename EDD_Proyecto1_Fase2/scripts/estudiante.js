@@ -193,6 +193,58 @@ function cargarArchivos() {
     }
 }
 
+/*--------------------- Dar Permisos a usuario ---------------------*/
+const btnOtorgarPermisos = document.getElementById('otorgar-permiso')
+btnOtorgarPermisos.addEventListener('click', otorgarPermiso)
+
+function otorgarPermiso() {
+    const directorio = document.getElementById('directorio')
+    if (directorio.value.trim() !== null) {
+        const carnet = prompt('Ingresa el número de carnet con el que quieres compartir el archivo')
+        if (carnet !== null) {
+            let res = avl.getById(avl.root, Number(carnet))
+            if (res !== null && res.carnet !== Number(localStorage.getItem('usuarioEnSesion'))) {
+                //Obtiene la carpeta
+                let carpetas = new NAryTree()
+                carpetas.root = usuario.folders.root
+                carpetas.total = usuario.folders.total
+                let carpeta = carpetas.getDir(directorio.value)
+                
+                if (carpeta !== null) {
+                    //Recupera los archivos de la carpeta
+                    let archivos = new sparseMatrix("Root")
+                    archivos.root = carpeta.files.root
+                    archivos.x = carpeta.files.x
+                    archivos.y = carpeta.files.y
+
+                    const nombreArchivo = prompt('Ingresa el nombre del archivo que quieres compartir \n "ejemplo.txt"')
+                    if (nombreArchivo !== null) {
+                        let archivo = archivos.getRow(nombreArchivo)
+                        if (archivo !== null) {
+                            const permiso = prompt('Ingresa el permiso que quieres otorgar \n r: Lectura \n w: Escritura \n rw: Lectura y Escritura')
+                            if (permiso !== null) {
+                                archivos.addPermission(nombreArchivo, carnet, permiso)
+                                carpeta.files.x = archivos.x
+                                carpeta.files.y = archivos.y
+                                usuario.folders = carpetas
+                                localStorage.setItem('ArbolAVL', JSON.stringify(CircularJSON.stringify(avl.root)))
+                                alert('Permiso otorgado exitosamente')
+                            }
+                        }else {
+                            alert('No se encontro el archivo')
+                        }
+                    }    
+                } else {
+                    alert('No fue posible acceder a la carpeta')
+                }
+                
+            }else {
+                alert('Carnet no encontrado o Carnet no válido')
+            }
+        }
+    }
+}
+
 /*--------------------- Muestra las carpetas y archivos en la interfaz gráfica ---------------------*/
 function imprimir(carpeta) {
     //Agrega las carpetas
