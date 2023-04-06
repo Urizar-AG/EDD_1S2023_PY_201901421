@@ -117,6 +117,36 @@ btnReporteCarpetas.addEventListener('click', () => {
     window.open ('reporteNArio.html', "_newtab" ); 
 })
 
+/*--------------------- Reporte De Archivos De La Carpeta ---------------------*/
+const btnReporteArchivos = document.getElementById('reporte-archivos')
+btnReporteArchivos.addEventListener('click', () => {
+    const directorio = document.getElementById('directorio')
+    if (directorio.value.trim() !== "") {
+        let carpetas = new NAryTree()
+        carpetas.root = usuario.folders.root
+        carpetas.total = usuario.folders.total  
+        let carpeta = carpetas.getDir(directorio.value)
+        if (carpeta !== null) {
+            let archivos = new sparseMatrix("Root")
+            archivos.root = carpeta.files.root
+            archivos.x = carpeta.files.x
+            archivos.y = carpeta.files.y 
+            if (archivos.root.down !== null) {
+                let dot = archivos.getDot()
+                localStorage.setItem('dotArchivos', dot)
+                window.open ('reporteArchivos.html', "_newtab" ); 
+            }else {
+                alert("No se puede crear la matriz por falta de archivos")
+            }         
+        }else {
+            alert("No fue posible acceder a la carpeta especificada")
+        }
+    }else {
+        alert('La barra de direcciones no puede estar vacía')
+
+    }
+})
+
 /*--------------------- Reporte De Bitácora ---------------------*/
 const btnReporteBitacora = document.getElementById('reporte-bitacora')
 btnReporteBitacora.addEventListener('click', () => {
