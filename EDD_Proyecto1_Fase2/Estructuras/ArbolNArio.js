@@ -1,7 +1,10 @@
+import { nodeSparse, sparseMatrix } from "./MatrizDispersa.js";
+
 class nodeNAry {
     constructor(name, id) {
         this.name = name //Nombre de la carpeta
         this.id = id //Auxiliar para generar el gráfico
+        this.files = new sparseMatrix(name) //Archivos que contiene la carpeta
         this.next = null //Nodo siguiente
         this.first = null //Apuntador al primer nodo de la lista
     }
@@ -17,31 +20,31 @@ class NAryTree {
     add(path, name) {
         let ls = path.split('/') // /Documentos/Cursos -> ['', Documentos, Cursos]
         let exists = this.search(ls, name)
-        let res = false // false no se pudo añadir la carpeta, caso contrario, true
+        let res = null // null no se pudo añadir la carpeta, caso contrario, retorna el nombre de la carpeta
         switch (exists) {
             case 1:
                 res = this.add(path, "Copia " + name)
                 break;
             case 2:
                 this.addNode(ls, name);
-                res = true
+                res = name
                 //alert("Carpeta creada exitosamente")
                 break;
             case 3:
                 //alert("El directorio no es valido, no fue posible crear la carpeta ");
-                res = false
+                res = null
                 break;
             case 4:
-                res = false
+                res = null
                 //alert("El directorio no es valido, no fue posible crear la carpeta");
                 break;
             case 5:
                 this.addNode(ls, name);
-                res = true
+                res = name
                 //alert("Carpeta creada exitosamente")
                 break;
             default:
-                res = false
+                res = null
                 alert("Ocurrio un error, no fue posible agregar la carpeta");
                 break;
         }
@@ -221,7 +224,7 @@ class NAryTree {
         }
         //La carpeta a obtener está en la carpeta raíz
         else if (ls.length === 1 && name !== "/") {
-            console.log("laksdjflkjslfkjslkjflskjfl")
+            // console.log("laksdjflkjslfkjslkjflskjfl")
             let tmp = this.root.first
             while (tmp) {
                 if (tmp.name === name) {
@@ -400,7 +403,7 @@ class NAryTree {
             dot = dot + this.getValues()
             dot += "}"
         }
-        console.log(dot)
+        // console.log(dot)
         return dot
     }
 

@@ -1,9 +1,10 @@
 import { AVL } from "../Estructuras/ArbolAVL.js";
+import { CircularJSON } from "./circular-json.js";
 
 let avl = null
 if (localStorage.getItem("ArbolAVL") != null) {
     avl = new AVL()
-    avl.root = JSON.parse(localStorage.getItem("ArbolAVL"))
+    avl.root = CircularJSON.parse(JSON.parse(localStorage.getItem("ArbolAVL")))
 }
 
 const body = document.querySelector('body')
@@ -54,7 +55,7 @@ function cargaMasiva() {
             avl = new AVL();
             //Recorre el localStorage para recuperar los datos ya almacenados en el sistema y los agrega al árbol
             if (localStorage.getItem("ArbolAVL") != null) {
-                avl.root = JSON.parse(localStorage.getItem("ArbolAVL"))
+                avl.root = CircularJSON.parse(JSON.parse(localStorage.getItem("ArbolAVL")))
             }
 
             let data = JSON.parse(fr.result)
@@ -64,7 +65,7 @@ function cargaMasiva() {
                 avl.add(data[i].nombre, data[i].carnet, data[i].password, data[i].Carpeta_Raiz)
 
             }
-            localStorage.setItem("ArbolAVL", JSON.stringify(avl.root))
+            localStorage.setItem("ArbolAVL", JSON.stringify(CircularJSON.stringify(avl.root)))
 
             llenarTabla()
         })

@@ -141,6 +141,25 @@ i.fa-solid:active{
     padding: 30px;
 }
 
+.abrir {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.fa-file-lines {
+    color: lightskyblue;
+}
+
+.fa-file-pdf {
+    color: lightcoral;
+}
+
+.fa-file-image {
+    color: lightgreen;
+}
+
 @media (max-width:600px) {
     .side.closed {
         width: 0px;

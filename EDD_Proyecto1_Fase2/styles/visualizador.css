@@ -36,9 +36,32 @@ body {
     max-width: 100%;
 }
 
-.arbol {
+.value-container {
     grid-area: arbol;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* text-align: center; */
+    flex-direction: column;
+    padding: 25px;
+}
+
+#texto {
+    width: 90%;
+    font-size: 14px;
+    padding: 10px;
+}
+
+#pdf {
+    width: 70%;
+    height: 600px;
+    border: none;
+}
+
+
+@media (max-width:1000px) {
+    #pdf {
+        width: 95%;
+    }
+
 }

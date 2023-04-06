@@ -1,10 +1,11 @@
 import { AVL } from "../Estructuras/ArbolAVL.js";
+import { CircularJSON } from "./circular-json.js";
 
 //Recupera los datos de localStorage y los almacena en el árbol
 let avl = null
 if (localStorage.getItem("ArbolAVL") !== null) {
     avl = new AVL()
-    avl.root = JSON.parse(localStorage.getItem("ArbolAVL"))
+    avl.root = CircularJSON.parse(JSON.parse(localStorage.getItem("ArbolAVL")))
 }
 
 const formularioLogin = document.getElementById('login-form')

@@ -7,8 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oxygen+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/reporte.css">
-    <title>ReporteDeBitacora</title>
+    <link rel="stylesheet" href="../styles/visualizador.css">
+    <title>Visualizador</title>
 </head>
 <body>
     <div class="container">
@@ -17,9 +17,13 @@
                 <img src="../Images/logo2.png" alt="logo">
             </div>
         </div>
-        <div class="image-container">
-            <img src="" alt="bitácora" id="bitacora">
+        <div class="value-container">
+            <textarea id="texto" rows = "25" cols="150" readonly>
+            </textarea>
+            <img src="" id="imagen">
+            <iframe src="" id="pdf"></iframe>
         </div>
-    <script type="module" src="../scripts/reporteBitacora.js"></script>
+    </div>
+    <script type="module" src="../scripts/visualizador.js"></script>
 </body>
 </html>
