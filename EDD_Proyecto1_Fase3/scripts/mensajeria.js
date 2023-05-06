@@ -157,7 +157,7 @@ async function sendMessage() {
     globo.appendChild(parrafo);
     document.getElementById('chats').appendChild(globo);
     document.getElementById('message').value = ""; 
-    let encrypted = CryptoJS.AES.encrypt(mensaje, "EDD-2023");
+    let encrypted = CryptoJS.AES.encrypt(mensaje, "EDD-2023").toString();
     await blockChain.addBlock(fechaActual(), usuario, receptor, encrypted); 
     //Actualiza la block chain en el localStorage 
     localStorage.setItem("BlockChain-Primero", JSON.stringify(CircularJSON.stringify(blockChain.first)));
