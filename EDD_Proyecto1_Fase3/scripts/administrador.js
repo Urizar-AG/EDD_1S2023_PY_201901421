@@ -1,3 +1,4 @@
+import { BlockChain } from "../Estructuras/BlockChain.js";
 import { HashTable } from "../Estructuras/TablaHash.js";
 import { CircularJSON } from "./circular-json.js";
 
@@ -7,6 +8,13 @@ if (localStorage.getItem("ArbolAVL") != null) {
     tablaHash.table = CircularJSON.parse(JSON.parse(localStorage.getItem("TablaHash-Arreglo")));
     tablaHash.capacity = CircularJSON.parse(JSON.parse(localStorage.getItem("TablaHash-Capacidad")));
     tablaHash.used = CircularJSON.parse(JSON.parse(localStorage.getItem("TablaHash-Ocupado")));
+}
+
+let blockChain = null;
+if (localStorage.getItem("BlockChain-Primero") !== null) {
+    blockChain = new BlockChain();
+    blockChain.first = CircularJSON.parse(JSON.parse(localStorage.getItem('BlockChain-Primero')));
+    blockChain.blocksCreated = CircularJSON.parse(JSON.parse(localStorage.getItem('BlockChain-Cantidad-Bloques')));
 }
 
 const body = document.querySelector('body')
@@ -19,10 +27,24 @@ btnOcultar.addEventListener('click', () => {
     side.classList.toggle('closed');
 });
 
-/*--------------------- Ventana para que el admin pueda ver los bloques de la block chain ---------------------*/
+/*--------------------- Ventana para que el admin pueda ver los bloques de la blockchain ---------------------*/
 const btnVerMensajes = document.getElementById('ver-mensajes');
 btnVerMensajes.addEventListener('click', () => {
-    window.open ('visualizadorMensajes.html', "_newtab" ); 
+    if (blockChain.first !== null) {
+        window.open ('visualizadorMensajes.html', "_newtab" ); 
+    }else {
+        alert('No hay mensajes para revisar');
+    }
+});
+
+/*--------------------- Ventana para que el admin pueda ver el reporte de la mensajes ---------------------*/
+const btnReporteMensajes = document.getElementById('reporte-mensajes');
+btnReporteMensajes.addEventListener('click', () => {
+    if (blockChain.first !== null) {
+        window.open('reporteBlockChain.html', "_newtab");
+    }else {
+        alert('No hay datos que reportar');
+    }
 });
 
 /*--------------------- Cerrar Sesión ---------------------*/

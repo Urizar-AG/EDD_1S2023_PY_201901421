@@ -31,6 +31,7 @@ class BlockChain {
         this.blocksCreated = 0;
     }
 
+    //Agregar un nuevo bloque a la blockchain
     async addBlock(date, transmitter, receiver, message) {
         if (this.first === null) { //Bloque  génesis
             const cadena = this.blocksCreated + date + transmitter + receiver + message;
@@ -52,6 +53,7 @@ class BlockChain {
         }
     }
 
+    //Método para encriptar la contraseña con el algoritmo sha256
     async sha256(mensaje) {
         let encryptedMessage;
         const encoder = new TextEncoder();
@@ -65,6 +67,30 @@ class BlockChain {
             encryptedMessage = mensaje;
         });
         return encryptedMessage;
+    }
+
+    //Escribe el código dot con los bloques de la blockchain
+    getDot() {
+        let dot = "";
+        if (this.first !== null) {
+            dot += "digraph G{";
+            dot += "node[shape=rectangle style=filled];"
+            dot += "label=\"BlockChain\";"
+            dot += "labelloc=\"t\";"
+            dot += "rankdir=TB;"
+            let cnt = 0;
+            let tmp = this.first
+            while (tmp) {
+                dot += "n" + cnt + `[label=\"TimeStamp = ${tmp.value.timeStamp}\\nEmisor: ${tmp.value.transmitter}\\nReceptor: ${tmp.value.receiver}\\nPreviousHash: ${tmp.value.previousHash}\"];`
+                if (tmp.next !== null) {
+                    dot += "n" + cnt + "->" + "n" + (1 + cnt) + ";"
+                }
+                tmp = tmp.next;
+                cnt++;
+            }
+            dot += "}";
+        }
+        return dot;
     }
 }
 
