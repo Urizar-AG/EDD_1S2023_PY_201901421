@@ -1,0 +1,196 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oxygen Mono', monospace;
+}
+
+body {
+    min-height: 100vh;
+    /* background-color: lavender; */
+    display: flex;
+}
+
+.side {
+    position: relative;
+    min-height: 100vh;
+    width: 300px;
+    transition: width 0.2s;
+    background: linear-gradient(180deg, #ffffff,  #08AEF5, #000046);
+}
+
+.side  h1{
+    display: flex;
+    margin: 20px 20px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* background-color: aqua; */
+}
+
+.side ul {
+    list-style: none;
+    overflow: hidden;
+}
+
+.side li {
+    display: flex;
+    align-items: center;
+    /* cursor: pointer; */
+    padding: 15px 20px;
+    letter-spacing: 1px;
+    /* background-color: lawngreen; */
+}
+
+.side li i {
+    font-size: 1.8em;
+    margin-right: 32px;
+}
+
+.side li:hover {
+    color: #ffffff;
+    background: linear-gradient(270deg, #000046, #08AEF5); 
+    border-radius: 12px;
+}
+
+.side li button{
+    border: none;
+    width: 30px;
+    background-color: transparent;
+    cursor: pointer;
+    /* background-color: aqua; */
+}
+
+i.fa-solid:active{
+    color: #ffffff
+}
+
+.side li input{
+    width: 195px;
+}
+
+.side .btn {
+    background-color: #08AEF5;
+    color: white;
+    position: absolute;
+    top: 28px;
+    right: 0;
+    transform: translateX(100%);
+    outline: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    cursor: pointer;
+}
+
+.side i.fa-chevron-right {
+    display: none;
+}
+
+.side.closed {
+    width: 0px;
+}
+
+.side.closed i.fa-chevron-left {
+    display: none;
+}
+
+.side.closed i.fa-chevron-right {
+    display: block;
+}
+
+.main-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 50px;
+    display: grid;
+    gap: 1em; /* Separacion entre las filas y columnas */
+    min-height: 100vh;
+    grid-template-rows: 1fr 1fr;
+    /* Distribución de los componentes */
+    grid-template-areas: 
+        "students students"
+        "permissions permissions"
+    ;
+}
+
+#students {
+    grid-area: students;
+    /* background-color: lavender; */
+}
+
+#permissions {
+    grid-area: permissions;
+    /* background-color: lightgreen; */
+}
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.table-container table  {
+    text-align: center;
+    border-collapse: collapse;
+    display: block;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.table-container thead {
+    position: sticky;
+    color: #ffffff;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background: linear-gradient(270deg, #000046, #08AEF5); 
+    border-bottom: solid #000000;
+}
+
+.table-container th, td {
+    padding: 10px;
+}
+
+.table-container tr:nth-child(even) {
+    background-color: #d8d8d8;
+}
+
+.table-container h3 {
+    letter-spacing: 1px;
+    border-bottom: solid 5px;
+    border-color: #08AEF5;
+}
+
+.separator {
+    color: #ffffff;
+}
+
+/*
+@media (max-width:600px) {
+    .side.closed {
+        width: 0px;
+    }
+
+    .main {
+        // background-color: lightcoral;
+        padding: 48px;
+    }
+
+    .card {
+        padding: 10px;
+        // font-size: 10px; 
+        letter-spacing: 0px;
+    }
+
+    .card div {
+        font-size: 3em;
+        padding: 30px;
+        // background-color: aqua;
+    }
+
+}
+*/

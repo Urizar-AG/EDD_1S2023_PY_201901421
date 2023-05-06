@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Mensajeria</title> 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Oxygen Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen+Mono&display=swap" rel="stylesheet">
+    <!-- Simbolos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../styles/mensajeria.css">
+    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script> -->
+    <!-- CryptJS AES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+</head>
+</head>
+<body>
+    <main>
+        <header>
+            <div class="title">
+                <img src="../Images/logo2.png" alt="logo.png">
+            </div>
+        </header>
+
+        <div class="container">
+            <!-- VENTANA DE CHATS -->
+            <div class="users-window">
+                <div class="users-head">
+                    <ul class="search-user">
+                        <li>
+                            <button type="button" id="buscar-estudiante"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <input type="text" id="buscador" placeholder="2000000">
+                        </li>
+                    </ul>
+                    <!-- Lista de contactos -->
+                    <ul class="user-list" id="chat">
+                    </ul>
+                </div>
+            </div>
+
+            <!-- VENTANA DEL CHAT -->
+            <div class="chat-window">
+                <!-- Aquí van los mensajes -->
+                <div class="chats" id="chats">
+                </div>
+                <!-- Barra de escribir mensaje y enviar -->
+                <div class="user-input" id="user-input">
+                </div>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="../scripts/mensajeria.js"></script>
+</body>
+</html>
