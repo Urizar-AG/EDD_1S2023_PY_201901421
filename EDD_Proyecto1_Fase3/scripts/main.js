@@ -1,6 +1,7 @@
 import { AVL } from "../Estructuras/ArbolAVL.js";
 import { CircularJSON } from "./circular-json.js";
 import { NodeHash, HashTable } from "../Estructuras/TablaHash.js";
+import { NodeBlock, BlockChain } from "../Estructuras/BlockChain.js";
 
 let avl = null
 let tablaHash = null;
@@ -22,6 +23,14 @@ if (localStorage.getItem("TablaHash-Arreglo") !== null) {
     tablaHash.capacity = CircularJSON.parse(JSON.parse(localStorage.getItem("TablaHash-Capacidad")));
     tablaHash.used = CircularJSON.parse(JSON.parse(localStorage.getItem("TablaHash-Ocupado")));
 }
+
+//No existe la block chain en el localStorage
+if (localStorage.getItem("BlockChain-Primero") === null) { 
+    let blockChain = new BlockChain();
+    localStorage.setItem("BlockChain-Primero", JSON.stringify(CircularJSON.stringify(blockChain.first)));
+    localStorage.setItem("BlockChain-Cantidad-Bloques", JSON.stringify(CircularJSON.stringify(blockChain.blocksCreated)));
+}
+
 
 const formularioLogin = document.getElementById('login-form')
 formularioLogin.addEventListener("submit", login)
@@ -49,22 +58,22 @@ async function login(event) {
                 if (aux !== null) {
                     const encryptedPassword = await sha256(password.value);
                     if (aux.password === encryptedPassword) {
-                        localStorage.setItem('usuarioEnSesion', aux.carnet)
+                        localStorage.setItem('UsuarioEnSesion', aux.carnet)
                         alert("Bienvenido " + aux.name)
                         window.location.href = "pages/estudiante.html"
                     }else {
-                        password.value = ""
-                        alert("Contraseña incorrecta")
+                        password.value = "";
+                        alert("Contraseña incorrecta");
                     }
                 }else {
-                    username.value = ""
-                    password.value = ""
-                    alert("Credenciales incorrectas")
+                    username.value = "";
+                    password.value = "";
+                    alert("Credenciales incorrectas");
                 }
             }else {
-                username.value = ""
-                password.value = ""
-                alert("No hay estudiantes registrados en el sistema")
+                username.value = "";
+                password.value = "";
+                alert("No hay estudiantes registrados en el sistema");
             }
         }
     }

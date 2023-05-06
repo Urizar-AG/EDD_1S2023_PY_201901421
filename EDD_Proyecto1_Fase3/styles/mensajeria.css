@@ -1,0 +1,235 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oxygen Mono', monospace;
+}
+
+main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    overflow: hidden;
+    border-radius: 25px;
+}
+
+header {
+    background: linear-gradient(90deg, #ffffff,  #08AEF5, #000046); 
+    padding: 7px 20px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.container {
+    padding: 20px; 
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.users-window {
+    width: 350px;
+    background-color: #3f3f3f;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-right: 20px;
+    color: #ffffff;
+}
+
+.users-head {
+    margin-bottom: 15px;
+}
+
+/* LISTA DE CHATS */
+.search-user {
+    list-style: none;
+    overflow: hidden;
+}
+
+.search-user li {
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+    letter-spacing: 1px;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.search-user li i {
+    font-size: 1.8em;
+}
+
+.search-user li button{
+    border: none;
+    width: 30px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+i.fa-solid:active{
+    color: #ffffff
+}
+
+.user-list {
+    list-style: none;
+    overflow: hidden;
+}
+
+.user-list li {
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+    letter-spacing: 1px;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.user-list li:hover {
+    color: #ffffff;
+    background: linear-gradient(270deg, #000046, #08AEF5); 
+    border-radius: 12px;
+}
+
+/* .user-list p {
+    margin-bottom: 15px;
+    background-color: lightcoral;
+} */
+
+/* CHAT */
+.chat-window {
+    width: 100%;
+    border-radius: 10px;
+    background-color: #3f3f3f;
+}
+
+.chats::-webkit-scrollbar {
+    width: 15px;
+    border-radius: 25px;
+}
+
+.chats::-webkit-scrollbar-track {
+    border-radius: 25px;
+}
+
+.chats::-webkit-scrollbar-thumb {
+    background-color: #d8d8d8;
+    border-radius: 25px;
+}
+
+.chats {
+    height: 500px;
+    max-height: 65vh;
+    padding: 20px;
+    overflow: auto;
+}
+
+/* MENSAJE DE ENCRIPTADOS */
+.user-join {
+    font-size: 0.8em;
+    background-color: #d8d8d8;
+    border-radius: 50px;
+    width: max-content;
+    padding: 7px 20px;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    text-align: center;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.message {
+    background-color: #ffffff;
+    padding: 8px 15px;
+    max-width: 350px;
+    margin-bottom: 15px;
+    border-radius: 10px 10px 10px 10px;
+    word-wrap: break-word;
+}
+
+.message p {
+    white-space: pre-wrap;
+}
+
+/* MENSAJE QUE ENVÍA EL USUARIO EN SESIÓN */
+.outgoing {
+    margin-left: auto;
+    border-radius: 10px 10px 10px 10px;
+    text-align: left;
+    background-color: #08AEF5;
+}
+
+/* ÁREA DONDE SE ESCRIBE EL MENSAJE */
+.user-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    align-items: stretch;   
+    outline: none;
+    border: none;
+    padding: 10px 20px 15px 20px;
+    border-radius: 25px;
+    /* background-color:bisque; */
+}
+
+/* .user-input input {
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+    width: 100%;
+    border-radius: 50px 0 0 50px;
+    font-size: 1em;
+} */
+
+.user-input textarea::-webkit-scrollbar {
+    overflow: hidden;
+}
+
+.user-input textarea {
+    font-size: 1em;
+    width: 100%;
+    resize:none;
+    outline: none;
+    border: none;
+    border-radius: 25px 0 0 25px;
+    padding: 10px 20px;
+}
+
+.user-input textarea:focus{
+    /* box-shadow: inset 0 0 3px 2px; */
+    box-shadow: inset 0 0 0 0;
+}
+
+.user-input button {
+    font-weight: 600;
+    padding: 5px 15px;
+    border: none;
+    outline: none;
+    letter-spacing: 0.5px;
+    border-radius: 0 50px 50px 0;
+    font-size: 1em; 
+    color:#000000;
+    font-weight: bold;
+    background-color: #08AEF5;
+    cursor: pointer;
+}
+
+.user-input button:hover {
+    color: #ffffff;
+    background: linear-gradient(270deg, #000046, #08AEF5); 
+}
+
+.user-input button:active {
+    color: #000000;
+    background: linear-gradient(270deg, #000046, #08AEF5); 
+}
