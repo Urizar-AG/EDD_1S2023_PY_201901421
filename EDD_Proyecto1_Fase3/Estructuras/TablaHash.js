@@ -132,12 +132,13 @@ class HashTable {
                     let cnt = 1;
                     index = this.recalculateIndex(carnet, cnt);
                     while (this.table[index] != null) {
-                        cnt++;
-                        index = this.recalculateIndex(carnet, cnt);
+
                         if (this.table[index]?.carnet == carnet) {
                             console.log('Bienvenido usuario' + this.table[index].name);
                             return this.table[index];
                         }
+                        cnt++;
+                        index = this.recalculateIndex(carnet, cnt);
                     }
                     return null;
                 }
