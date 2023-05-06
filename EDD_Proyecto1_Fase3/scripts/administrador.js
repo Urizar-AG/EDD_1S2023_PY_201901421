@@ -19,6 +19,12 @@ btnOcultar.addEventListener('click', () => {
     side.classList.toggle('closed');
 });
 
+/*--------------------- Ventana para que el admin pueda ver los bloques de la block chain ---------------------*/
+const btnVerMensajes = document.getElementById('ver-mensajes');
+btnVerMensajes.addEventListener('click', () => {
+    window.open ('visualizadorMensajes.html', "_newtab" ); 
+});
+
 /*--------------------- Cerrar Sesión ---------------------*/
 const btnLogout = document.getElementById('logout')
 btnLogout.addEventListener("click",  (e) => {

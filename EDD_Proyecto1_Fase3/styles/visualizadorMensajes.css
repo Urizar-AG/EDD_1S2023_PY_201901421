@@ -1,0 +1,90 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Oxygen Mono', monospace;
+}
+
+.container {
+    display: grid;
+    gap: 1em; /* Separacion entre las filas y columnas */
+    min-height: 100vh;
+    grid-template-rows: 100px 400px 100px;
+    /* Distribución de los componentes */
+    grid-template-areas: 
+        "header header" 
+        "blocke blocke"
+        "btn btn"
+    ;
+}
+
+.header-container {
+    grid-area: header; /* "Id" con el que lo indentifica el grid en el que está contenido */
+    display: flex;
+    background: linear-gradient(90deg, #ffffff,  #08AEF5, #000046); 
+}
+
+.header-container .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.header-container .logo img {
+    height: 60px;
+    width: 225px;
+    max-width: 100%;
+}
+
+.block-container {
+    grid-area: blocke;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.block-container textarea {
+    resize:none;
+    font-size: 18px;
+    height: 300px;
+    width: 70%;
+    border-radius: 25px;
+    padding: 10px 20px;
+    overflow: hidden;
+    word-break: break-all;
+}
+
+.button-container {
+    grid-area: btn;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 15%;
+    padding-right: 15%;
+    /* background-color: lightblue; */
+}
+
+button {
+    border:none; 
+    outline: none; 
+    border-radius: 0px;
+    font-size: 1em;
+    color:#000000;
+    padding: 15px 60px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    background-color: #08AEF5;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+button:hover {
+    color: #ffffff;
+    background: linear-gradient(270deg, #000046, #08AEF5); 
+}
+
+button:active {
+    color: #000000;
+    background: linear-gradient(270deg, #000046, #08AEF5); 
+}
